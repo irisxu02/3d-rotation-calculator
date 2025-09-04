@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rotation Tool</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="controls">
+        <h2>Rotation Tool</h2>
+        <label for="rotationType">Rotation Representation:</label>
+        <select id="rotationType">
+            <option value="axis-angle">Axis Angle</option>
+            <option value="euler">Euler</option>
+            <option value="matrix">Matrix</option>
+            <option value="quaternion">Quaternion</option>
+        </select>
+        
+        <div id="axis-angle-group">
+            <h3>Axis-Angle</h3>
+            <select id="axis-angle-degRad">
+                <option value="deg">deg</option>
+                <option value="rad">rad</option>
+            </select>
+            <label>x:<input id="axisX" type="text" value="1"></label><br>
+            <label>y:<input id="axisY" type="text" value="0"></label><br>
+            <label>z:<input id="axisZ" type="text" value="0"></label><br>
+            <label>&#952;:<input id="angle" type="text" value="0"></label><br>
+        </div>
+
+        <div id="euler-group" style="display:none;">
+            <h3>Euler Angles</h3>
+            <p>Intrinsic order ZYX</p>
+            <select id="euler-degRad">
+                <option value="deg">deg</option>
+                <option value="rad">rad</option>
+            </select>
+            <label>&#945;:<input id="alpha" type="text" value="0"></label><br>
+            <label>&#946;:<input id="beta" type="text" value="0"></label><br>
+            <label>&#947;:<input id="gamma" type="text" value="0"></label><br>
+        </div>
+
+        <div id="matrix-group" style="display:none;">
+            <h3>Rotation Matrix</h3>
+            <table id="matrixInputs" style="border-collapse:collapse;">
+                <tbody>
+                    <tr>
+                        <td><input id="m00" type="text" step="any" value="1" style="width:3em;"></td>
+                        <td><input id="m01" type="text" step="any" value="0" style="width:3em;"></td>
+                        <td><input id="m02" type="text" step="any" value="0" style="width:3em;"></td>
+                    </tr>
+                    <tr>
+                        <td><input id="m10" type="text" step="any" value="0" style="width:3em;"></td>
+                        <td><input id="m11" type="text" step="any" value="1" style="width:3em;"></td>
+                        <td><input id="m12" type="text" step="any" value="0" style="width:3em;"></td>
+                    </tr>
+                    <tr>
+                        <td><input id="m20" type="text" step="any" value="0" style="width:3em;"></td>
+                        <td><input id="m21" type="text" step="any" value="0" style="width:3em;"></td>
+                        <td><input id="m22" type="text" step="any" value="1" style="width:3em;"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="quaternion-group" style="display:none;">
+            <h3>Quaternion</h3>
+            <label>x:<input id="qx" type="text" value="0"></label><br>
+            <label>y:<input id="qy" type="text" value="0"></label><br>
+            <label>z:<input id="qz" type="text" value="0"></label><br>
+            <label>w:<input id="qw" type="text" value="1"></label><br>
+        </div>
+        <div id="error-message" style="color:red;"></div>
+    </div>
+
+    <div id="outputs">
+        <div id="axis-angle-output-group">
+            <h3>Axis-Angle</h3>
+            <p>Axis (x, y, z, &#952;)</p>
+            <select id="axis-angle-output-degRad">
+                <option value="deg">deg</option>
+                <option value="rad">rad</option>
+            </select>
+            <pre id="axisAngleOut"></pre>
+        </div>
+        <div id="euler-output-group">
+            <h3>Euler Angles</h3>
+            <p>Intrinsic order ZYX</p>
+            <select id="euler-output-degRad">
+                <option value="deg">deg</option>
+                <option value="rad">rad</option>
+            </select>
+            <pre id="eulerOut"></pre>
+        </div>
+        <div id="matrix-output-group">
+            <h3>Rotation Matrix</h3>
+            <pre id="matOut"></pre>
+        </div>
+        <div id="quaternion-output-group">
+            <h3>Quaternion</h3>
+            <p>[x, y, z, w]</p>
+            <pre id="quatOut"></pre>
+        </div>
+    </div>
+
+    <div id="right-panel">
+        <h3>3D Axis Visualization</h3>
+        <select id="upVec">
+            <option value="0,1,0">Y Up</option>
+            <option value="1,0,0">X Up</option>
+            <option value="0,0,1">Z Up</option>
+        </select>
+        <canvas id="canvas" width="400" height="400"></canvas>
+    </div>
+
+    <button id="darkModeToggle">🕶️</button>
+    <script>
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                darkModeToggle.textContent = '💡'; // source: https://emojipedia.org/light-bulb
+            } else {
+                darkModeToggle.textContent = '🕶️'; // source: https://emojipedia.org/sunglasses
+            }
+        });
+    </script>
+
+    <div id="footer">
+    <small>
+        <a href="https://github.com/irisxu02/3d-rotation-calculator" target="_blank">GitHub</a> /
+        <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache 2.0 License</a>
+    </small>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/mathjs@14.6.0/lib/browser/math.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gl-matrix@3.4.4/gl-matrix-min.js"></script>
+    <script src="glmatrix-aliases.js"></script>
+    <script src="conversion.js"></script>
+    <script src="main.js"></script>
+    <script src="viz.js"></script>
+</body>
+</html>
