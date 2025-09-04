@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "gl-matrix": "^3.4.4",
+    "mathjs": "^14.6.0"
+  }
+}

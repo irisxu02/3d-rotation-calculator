@@ -1,0 +1,125 @@
+:root {
+  --bg-body: #fff;
+  --bg-controls: #f3f3f3;
+  --bg-input: #fff;
+  --bg-outputs: #d2e3e6;
+  --bg-right: #fffbe6;
+  --bg-canvas: #fff;
+  --color-text: #000;
+  --border-color: #ccc;
+  --pre-bg: #fff;
+}
+
+body.dark-mode {
+  --bg-body: #1f1f1f;
+  --bg-controls: #242424;
+  --bg-input: #4e4e4e;
+  --bg-outputs: #383838;
+  --bg-right: #1e1e1e;
+  --bg-canvas: #181818;
+  --color-text: #e4e4e4;
+  --border-color: #555;
+  --pre-bg: #222;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  height: 100vh;
+  font-family: sans-serif;
+  background: var(--bg-body);
+  color: var(--color-text);
+}
+
+#controls {
+  width: 25%;
+  min-width: 200px;
+  padding: 1em;
+  background: var(--bg-controls);
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  overflow-y: auto;
+}
+
+#outputs {
+  width: 25%;
+  min-width: 200px;
+  padding: 1em;
+  background: var(--bg-outputs);
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  overflow-y: auto;
+}
+
+#right-panel {
+  flex: 1;
+  background: var(--bg-right);
+  padding: 1em;
+  overflow-y: auto;
+}
+
+#canvas {
+  background: var(--bg-canvas);
+  border: 1px solid var(--border-color);
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: block;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5em 1em;
+  align-items: center;
+}
+
+input, select {
+background: var(--bg-input);
+  color: var(--color-text);
+  border: 1px solid var(--border-color);
+  padding: 0.25em;
+  border-radius: 3px;
+  width: 100%;
+  margin: 0.25em 0;
+}
+
+pre {
+  background: var(--pre-bg);
+  padding: 0.5em;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  margin: 0.25em 0;
+}
+
+#darkModeToggle {
+  position: fixed;
+  bottom: 1em;
+  left: 1em;
+  z-index: 1000;
+  padding: 0.5em 1em;
+  background: var(--bg-controls);
+  color: var(--color-text);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#footer {
+  position: fixed;
+  bottom: 0.5em;
+  right: 0.5em;
+  font-size: 0.8em;
+  color: #666;
+  background: transparent;
+}
+
+#footer a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+
