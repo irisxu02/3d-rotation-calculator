@@ -44,7 +44,7 @@ body {
 
 #outputs {
   width: 25%;
-  min-width: 200px;
+  min-width: 250px;
   padding: 1em;
   background: var(--bg-outputs);
   display: flex;
@@ -57,17 +57,27 @@ body {
   flex: 1;
   background: var(--bg-right);
   padding: 1em;
-  overflow-y: auto;
+  padding-bottom: 4em;
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+}
+
+#canvas-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  margin-bottom: 4em;
 }
 
 #canvas {
   background: var(--bg-canvas);
   border: 1px solid var(--border-color);
-  width: 100%;
+  width: 80%;
+  max-width: 80%;
   aspect-ratio: 1 / 1;
   display: block;
-  box-sizing: border-box;
-  max-width: 100%;
 }
 
 label {
